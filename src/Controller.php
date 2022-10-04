@@ -22,6 +22,7 @@ class Controller
     public function __construct()
     {
         $viewHandler = new \liansu\view\LiansuViewHandler();
+        $viewHandler->initialize(['tpl_dir' => App::instance()->rootDirectory . '/view', 'cache_dir' => App::instance()->runtimeDirectory . '/tmp/view']);
         $this->setViewHandler($viewHandler);
     }
 
