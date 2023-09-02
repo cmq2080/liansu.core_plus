@@ -1,29 +1,19 @@
 <?php
 
-/**
- * 描述：
- * Created at 2021/6/6 22:44 by mq
- */
-
 namespace liansu\core_plus;
 
 use liansu\core\Response;
-use liansu\core_plus\trait_\AssignTrait;
-use liansu\core_plus\trait_\ViewTrait;
+use liansu\core_plus\traits\TControllerView;
 
 class Controller
 {
-    use AssignTrait;
-    use ViewTrait;
+    use TControllerView;
 
     protected $assigns = [];
-    protected $viewHandler;
 
-    public function __construct()
+    public function assign($key, $value)
     {
-        $viewHandler = new \liansu\view\LiansuViewHandler();
-        $viewHandler->initialize(['tpl_dir' => App::instance()->rootDirectory . '/view', 'cache_dir' => App::instance()->runtimeDirectory . '/tmp/view']);
-        $this->setViewHandler($viewHandler);
+        $this->assigns[$key] = $value;
     }
 
     public function success($msg = '成功', $data = [], $sufAction = 'close_and_refresh') // 这块能不能做成一个本地化的语言模块？
@@ -38,8 +28,8 @@ class Controller
         Response::json($stat, $msg, $data);
     }
 
-    public function json($stat, $msg = '', $data = [])
+    public function json($data)
     {
-        Response::json($stat, $msg, $data);
+        Response::printf($data);
     }
 }
