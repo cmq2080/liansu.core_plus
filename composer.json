@@ -1,10 +1,10 @@
 {
     "name": "liansu/core_plus",
-    "description": "A extending module of The Liansu Framework",
+    "description": "A main extending module of The Liansu Framework",
     "keywords": [
         "framework",
         "liansu",
-		"core"
+        "core"
     ],
     "license": "MIT",
     "authors": [
@@ -14,13 +14,13 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "liansu/core": ">=0.0.1,<1.0.0",
-        "liansu/view": ">=0.0.1,<1.0.0"
+        "php": ">=7.4.0",
+        "liansu/core": ">=0.4.0,<1.0.0",
+        "liansu/view": ">=0.1.0,<1.0.0"
     },
     "autoload": {
         "psr-4": {
-            "liansu\\core_plus\\": "src/"
+            "liansu\\": "src/"
         }
     }
 }

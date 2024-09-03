@@ -5,15 +5,15 @@
  * Created at 2021/7/17 21:33 by mq
  */
 
-namespace liansu\core_plus\traits;
+namespace liansu\traits;
 
-use liansu\view\interfaces\IViewHandler;
-use liansu\view\LiansuViewHandler;
-use liansu\view\View;
+use liansu\interfaces\IViewHandler;
+use liansu\config\LiansuViewHandler;
+use liansu\facade\View;
 
 trait TControllerView
 {
-    protected IViewHandler|null $viewHandler = null;
+    protected IViewHandler $viewHandler;
 
     public function setViewHandler(IViewHandler $viewHandler)
     {
@@ -24,7 +24,7 @@ trait TControllerView
 
     public function getViewHandler()
     {
-        if (!$this->viewHandler) {
+        if (empty($this->viewHandler)) {
             $this->viewHandler = new LiansuViewHandler();
         }
 
