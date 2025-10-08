@@ -16,10 +16,10 @@ class LiansuViewHandler implements IViewHandler
 
     public function __construct($config = [])
     {
-        $this->tplDir = Helper::getRootDirectory() . '/view';
-        Helper::initDirectory($this->tplDir);
-        $this->cacheDir = Helper::getRuntimeDirectory() . '/tmp/view';
-        Helper::initDirectory($this->cacheDir);
+        $this->tplDir = get_root_dir() . '/view';
+        init_dir($this->tplDir);
+        $this->cacheDir = get_root_dir() . '/tmp/view';
+        init_dir($this->cacheDir);
 
         if ($config) {
             if (!empty($config['tpl_dir'])) {
@@ -40,9 +40,9 @@ class LiansuViewHandler implements IViewHandler
     public function fetch($file, $args = null): string
     {
         $tplFile = $this->getTplFile($file);
-        $cacheFile = $this->getCacheFile($tplFile);
+        $cacheFile = $this->getCachedFile($tplFile);
         if ($cacheFile === false) {
-            $cacheFile = $this->overwriteCacheFile($tplFile);
+            $cacheFile = $this->overwriteCachedFile($tplFile);
         }
 
         $finalContent = file_get_contents($cacheFile);
@@ -54,7 +54,7 @@ class LiansuViewHandler implements IViewHandler
         $finalContent = $this->fetch($file, $args);
 
         header('Content-Type:text/html;charset=utf-8');
-        Response::printf($finalContent);
+        echo $finalContent;
     }
 
     protected function getTplFile($file)
@@ -75,7 +75,7 @@ class LiansuViewHandler implements IViewHandler
         throw new LiansuException('Template File Not Found:' . $tplFile . '.[' . implode('|', $this->allowedExtensions) . ']');
     }
 
-    protected function getCacheFile($tplFile)
+    protected function getCachedFile($tplFile)
     {
         $fileKey = md5($tplFile);
         $cacheFile = $this->cacheDir . '/' . $fileKey;
@@ -92,7 +92,7 @@ class LiansuViewHandler implements IViewHandler
         return $cacheFile;
     }
 
-    protected function overwriteCacheFile($tplFile)
+    protected function overwriteCachedFile($tplFile)
     {
         $fileKey = md5($tplFile);
         $cacheFile = $this->cacheDir . '/' . $fileKey;
